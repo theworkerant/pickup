@@ -1,2 +1,4 @@
 ruby 2.7.1
 rails 6.0.2.2
+nodejs 12.16.1
+yarn 1.22.4
