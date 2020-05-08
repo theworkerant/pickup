@@ -34,8 +34,8 @@ $discord-blue: #7289da;
   }
 
   a.login-with-discord {
-    border-right: 4px solid #b69ed5;
-    border-bottom: 4px solid darken(#865cbb, 5);
+    border-right: 4px solid darken(#b69ed5, 15);
+    border-bottom: 4px solid darken(#865cbb, 25);
     border-left: 4px solid transparent;
     border-top: 4px solid transparent;
     background-color: white;
@@ -49,8 +49,8 @@ $discord-blue: #7289da;
     font-weight: bold;
     &:hover {
       color: darken(#865cbb, 15);
-      border-right: 4px solid darken(#b69ed5, 15);
-      border-bottom: 4px solid darken(#865cbb, 25);
+      border-right: 4px solid #b69ed5;
+      border-bottom: 4px solid darken(#865cbb, 5);
     }
     img {
       width: 250px;
