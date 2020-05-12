@@ -36,6 +36,7 @@ class Match < ApplicationRecord
           icon_url: self.host.picture
         )
         embed.description = self.description
+
         embed.color = "#865cbb"
         embed.image = Discordrb::Webhooks::EmbedThumbnail.new(
           url: ENV["HOST"] + ActionController::Base.helpers.asset_url("games/#{self.game.slug}.webp")
