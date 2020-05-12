@@ -29,7 +29,7 @@
           <%= label_tag(:match_duration) do %>
             Duration (mins)
           <% end %>
-          <%= f.number_field :duration, in: 15..3600 %>
+          <%= f.number_field :duration, placeholder: 60, value: 60, in: 15..3600 %>
         </div>
       </div>
 

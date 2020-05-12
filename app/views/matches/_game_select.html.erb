@@ -6,8 +6,9 @@
   "
 >
   <% @games.each do |game| %>
-    <div class="game <%= @game && @game.slug === game.slug ? 'selected' : '' %>">
-      <a href="<%= new_match_path(game: game.slug) %>">
+    <% selected = @game && @game.slug === game.slug %>
+    <div class="game <%= selected ? 'selected' : '' %>">
+      <a href="<%= selected ? "#" : new_match_path(game: game.slug) %>">
         <img src="<%= image_path('games/'+game.slug+'.webp') %>">
         <h3><%= game.name %></h3>
       </a>

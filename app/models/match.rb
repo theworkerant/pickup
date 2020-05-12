@@ -1,8 +1,4 @@
 class Match < ApplicationRecord
-  require "discordrb/webhooks"
-
-  WEBHOOK_URL = "https://discordapp.com/api/webhooks/709567145465479260/W3oj1bj3uqsPzQo379WrnT0IAUsNBTK5IvVwzqGOIk4hGabWhB1ARbBsg1r3Vd9zuSU_".freeze
-
   belongs_to :game
   belongs_to :host, class_name: "User", foreign_key: "user_id"
 
@@ -25,25 +21,21 @@ class Match < ApplicationRecord
   end
 
   def announce
-    client = Discordrb::Webhooks::Client.new(url: WEBHOOK_URL)
-
-    client.execute do |builder|
-      # builder.content = "Hello world!"
-      builder.add_embed do |embed|
-        embed.title = "Let's Play!"
-        embed.author = Discordrb::Webhooks::EmbedAuthor.new(
-          name: self.host.username,
-          icon_url: self.host.picture
-        )
-        embed.description = self.description
-
-        embed.color = "#865cbb"
-        embed.image = Discordrb::Webhooks::EmbedThumbnail.new(
-          url: ENV["HOST"] + ActionController::Base.helpers.asset_url("games/#{self.game.slug}.webp")
-        )
-        embed.timestamp = Time.now
-      end
+    match = self
+    embed = Discord::Embed.new do
+      title("Let's Play")
+      description(match.description)
+      author(name: match.host.username, icon_url: match.host.picture)
+      add_field(name: "Slots", value: match.slots)
+      add_field(name: "Start", value: match.start_time.strftime("%I:%M %p Eastern"))
+      add_field(name: "End", value: (match.start_time + match.duration.minutes).strftime("%I:%M %p Eastern"))
+      add_field(name: "Queue Up!", value: "[click to reserve](https://fathompickup.herokuapp.com)")
+      image(url: ENV["HOST"] + ActionController::Base.helpers.asset_url("games/#{match.game.slug}.webp"))
+      timestamp(DateTime.now)
+      footer(text: 'Brought to you by Fathom Pickup!')
     end
+
+    Discord::Notifier.message(embed)
   end
 
   private

@@ -19,8 +19,12 @@ class MatchesController < ApplicationController
       render "new"
     else
       @match.announce
-      redirect_to matches_path(@match)
+      redirect_to match_path(@match)
     end
+  end
+
+  def show
+    @match = Match.find(params["id"])
   end
 
   private
