@@ -30,9 +30,9 @@ class Match < ApplicationRecord
       add_field(name: "Start", value: match.start_time.strftime("%I:%M %p Eastern"))
       add_field(name: "End", value: (match.start_time + match.duration.minutes).strftime("%I:%M %p Eastern"))
       add_field(name: "Queue Up!", value: "[click to reserve](https://fathompickup.herokuapp.com)")
-      image(url: ENV["HOST"] + ActionController::Base.helpers.asset_url("games/#{match.game.slug}.webp"))
+      image(url: ENV["HOST_URL"] + ActionController::Base.helpers.asset_url("games/#{match.game.slug}.webp"))
       timestamp(DateTime.now)
-      footer(text: "Fathom Pickup :: #{ENV['HOST']}")
+      footer(text: "Fathom Pickup :: #{ENV['HOST_URL']}")
     end
 
     Discord::Notifier.message(embed)
