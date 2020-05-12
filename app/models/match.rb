@@ -23,7 +23,7 @@ class Match < ApplicationRecord
   def announce
     match = self
     embed = Discord::Embed.new do
-      title("Let's Play")
+      title("#{match.host.username} wants to play #{match.game.name}")
       description(match.description)
       author(name: match.host.username, icon_url: match.host.picture)
       add_field(name: "Slots", value: match.slots)
@@ -32,7 +32,7 @@ class Match < ApplicationRecord
       add_field(name: "Queue Up!", value: "[click to reserve](https://fathompickup.herokuapp.com)")
       image(url: ENV["HOST"] + ActionController::Base.helpers.asset_url("games/#{match.game.slug}.webp"))
       timestamp(DateTime.now)
-      footer(text: 'Brought to you by Fathom Pickup!')
+      footer(text: "Fathom Pickup :: #{ENV['HOST']}")
     end
 
     Discord::Notifier.message(embed)
