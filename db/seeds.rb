@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+["Deep Rock Galactic", "Team Fortress 2", "Reflex Arena"].each do |game|
+  Game.create(name: game)
+end
