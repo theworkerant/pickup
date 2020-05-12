@@ -1,4 +1,13 @@
+<h2>Upcoming... </h2>
 <% @matches.each do |match| %>
+  <h1><%= match.game.name %></h1>
+  <h2>Slots Left: <%= match.slots_remaining %></h2>
+<% end %>
+
+<hr>
+
+<h2>Recently... </h2>
+<% @recent_matches.each do |match| %>
   <h1><%= match.game.name %></h1>
   <h2>Slots Left: <%= match.slots_remaining %></h2>
 <% end %>

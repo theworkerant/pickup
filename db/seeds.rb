@@ -7,6 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-["Deep Rock Galactic", "Team Fortress 2", "Reflex Arena"].each do |game|
-  Game.create(name: game)
+[
+  ["Deep Rock Galactic", "drg", {slots: 4, max: 4}],
+  ["Team Fortress 2", "tf2", {slots: 6, max: 24}],
+  ["Reflex Arena", "reflex", {slots: 2, max: 10}]
+].each do |(game,slug,defaults)|
+  Game.create(name: game, slug: slug, defaults: defaults)
 end

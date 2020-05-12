@@ -1,0 +1,84 @@
+@import "variables";
+
+.new-match {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+
+  .games {
+    display: grid;
+    align-self: center;
+
+    .game {
+      margin: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      a {
+        color: white;
+      }
+
+      &:hover img {
+        border: 2px solid lighten($purple, 10);
+        transform: scale(1.1);
+      }
+
+      &.selected:hover img {
+        transform: scale(1);
+      }
+
+      &.selected {
+        a {
+          color: $purple;
+        }
+        img {
+          border: 2px solid lighten($purple, 10);
+        }
+      }
+      img {
+        object-fit: cover;
+        border: 2px solid transparent;
+        margin: 5px 2px;
+        border-radius: 1rem;
+        width: 100%;
+        height: 150px;
+      }
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+
+    input,
+    textarea {
+      font-family: "Jost", sans-serif;
+      font-size: 1.5rem;
+      border-radius: 0.5rem;
+      border: 4px solid lighten($purple, 20);
+      color: white;
+      background-color: transparent;
+      margin: 1rem 0;
+    }
+
+    .basics {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 5px darken($purple, 20) dashed;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      > div {
+        text-align: center;
+        input {
+          text-align: center;
+          width: 100%;
+        }
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}

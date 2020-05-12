@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def no_auth_allowed
-    redirect_to "/games" if user_signed_in?
+    redirect_to "/matches" if user_signed_in?
   end
 
   def current_user

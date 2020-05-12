@@ -7,6 +7,5 @@ Rails.application.routes.draw do
   get "auth/failure", to: "application#index"
   get "me", to: "me#show", as: "me"
 
-
-  get "matches", to: "matches#index"
+  resources :matches, only: %w(index new create)
 end

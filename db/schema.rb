@@ -17,6 +17,8 @@ ActiveRecord::Schema.define(version: 2020_05_08_210605) do
 
   create_table "games", force: :cascade do |t|
     t.string "name"
+    t.string "slug"
+    t.json "defaults"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -24,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_210605) do
   create_table "matches", force: :cascade do |t|
     t.bigint "game_id"
     t.bigint "user_id"
+    t.text "description"
     t.datetime "start_time"
     t.integer "duration"
     t.integer "slots"

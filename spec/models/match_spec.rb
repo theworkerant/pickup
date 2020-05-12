@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Match, type: :model do
 
-  it "Match worksv" do
+  it "Match works" do
     game = Game.create(name: "Dodgeball")
     kate = User.create(username: "kate")
     white = User.create(username: "white")
