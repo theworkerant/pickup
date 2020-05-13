@@ -1,16 +1,90 @@
 @import "variables";
 
 .new-match {
-  margin: 2rem;
   display: flex;
   flex-direction: column;
+  background-color: lighten($background, 5);
+
+  .match {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+      "sidebar sidebar game game game game"
+      "sidebar sidebar form form form form";
+
+    .selected-game {
+      grid-area: game;
+      position: relative;
+      margin: 0 1rem;
+      margin-top: 1rem;
+      h2 {
+        position: absolute;
+        font-weight: normal;
+        top: 0;
+        left: 0;
+        margin: 1rem 0;
+        padding: 0 2rem;
+        color: white;
+        font-size: 2rem;
+        background-color: darken($purple, 20);
+        strong {
+          text-decoration: underline;
+        }
+      }
+      img {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        width: 100%;
+        object-fit: cover;
+        max-height: 350px;
+      }
+    }
+    .sidebar {
+      grid-area: sidebar;
+      margin: 0 1rem;
+      .others {
+        margin: 0 auto;
+        background-color: lighten($background, 15);
+        border-radius: 1rem;
+        padding: 0.5rem;
+        .title {
+          font-size: 1.2rem;
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+      .instructions {
+        grid-area: instructs;
+        background-color: lighten($background, 5);
+        font-size: 1.4rem;
+        padding: 1rem;
+        li {
+          line-height: 1.6rem;
+          margin-bottom: 0.75rem;
+        }
+      }
+    }
+  }
 
   .games {
     display: grid;
     align-self: center;
+    width: 100%;
+    &.small {
+      .game {
+        img {
+          height: 80px;
+        }
+      }
+      h3 {
+        margin: 0.1rem;
+        font-size: 0.8rem;
+      }
+    }
 
     .game {
-      margin: 1rem;
+      max-width: 300px;
+      padding: 1rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -49,35 +123,52 @@
 
   .form {
     display: flex;
-    flex-direction: column;
-    max-width: 100%;
+    flex-direction: row;
+    grid-area: form;
+    background-color: lighten($background, 10);
 
     input,
     textarea {
       font-family: "Jost", sans-serif;
       font-size: 1.5rem;
       border-radius: 0.5rem;
-      border: 4px solid lighten($purple, 20);
+      border: 2px solid lighten($purple, 20);
       color: white;
       background-color: transparent;
       margin: 1rem 0;
+      padding: 0.5rem;
     }
 
-    .basics {
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 5px darken($purple, 20) dashed;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      > div {
-        text-align: center;
-        input {
-          text-align: center;
-          width: 100%;
-        }
+    .fields {
+      grid-area: form;
+      margin: 2rem;
+      width: 100%;
+      label {
         display: flex;
-        flex-direction: column;
+        font-weight: bold;
+        background-color: desaturate($purple, 40);
+        color: white;
+        font-size: 1rem;
+
+        padding: 0.2rem;
+      }
+      .basic-fields {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > div {
+          input {
+            display: flex;
+          }
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      input[type="submit"] {
+        background-color: $purple;
+        color: white;
+        cursor: pointer;
       }
     }
   }

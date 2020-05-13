@@ -1,9 +1,11 @@
 @import "variables";
 
 body {
-  background-color: #0f1720;
+  background-color: $background;
   color: white;
   font-family: "Jost", sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 a,
@@ -16,15 +18,31 @@ a:visited {
   h1 {
     margin: 0;
   }
-  margin-top: 1rem;
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 1.1rem;
   .logo {
-    margin-top: 1rem;
     width: 80px;
+  }
+  .navbar {
+    background-color: darken($purple, 10);
+    a {
+      margin: 0 1rem;
+      color: white;
+      font-size: 0.8rem;
+      &:hover {
+        text-decoration: overline;
+      }
+    }
+    text-transform: uppercase;
+
+    padding: 0.2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 }
 

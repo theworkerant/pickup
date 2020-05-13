@@ -3,7 +3,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authenticate
-    redirect_to "/" unless user_signed_in?
+    unless user_signed_in?
+      redirect_to root_path
+    end
   end
 
   def no_auth_allowed
@@ -15,7 +17,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_signed_in?
-    # converts current_user to a boolean by negating the negation
     !!current_user
   end
 

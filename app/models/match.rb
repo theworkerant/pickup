@@ -36,17 +36,20 @@ class Match < ApplicationRecord
     embed = Discord::Embed.new do
       title("#{match.host.username} wants to play #{match.game.name}")
       description(match.description)
-      author(name: match.host.username, icon_url: match.host.picture)
       add_field(name: "Total Slots", value: "#{match.slots} slots")
       add_field(name: "Time", value: match.formatted_time)
       add_field(name: "I'll Play!", value: "[click to reserve](#{ENV['HOST_URL']}/matches/#{match.id})")
-      thumbnail(url: ENV["HOST_URL"] + ActionController::Base.helpers.asset_url("games/#{match.game.slug}.webp"))
-      # image(url: ENV["HOST_URL"] + ActionController::Base.helpers.asset_url("games/#{match.game.slug}.webp"))
+      thumbnail(url: match.host.picture)
+      image(url: match.image_url("games/#{match.game.slug}.webp"))
       timestamp(DateTime.now)
       footer(text: "pickup.fathom.digital")
     end
 
     Discord::Notifier.message(embed)
+  end
+
+  def image_url(name)
+    ENV["HOST_URL"] + ActionController::Base.helpers.asset_url(name)
   end
 
   private

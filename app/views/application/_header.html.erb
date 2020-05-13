@@ -1,4 +1,11 @@
 <div class="header">
-  <h1>Fathom Pickup</h1>
   <img src="<%= image_path('logo.png') %>" alt="logo" class="logo">
+  <h1>Fathom Pickup</h1>
+  <div class="navbar">
+    <a href="<%= matches_path %>">Matches</a>
+    <a href="<%= new_match_path %>">New Match</a>
+    <% if @current_user %>
+      <a href="/logout">Logout (<%= @current_user.username %>)</a>
+    <% end %>
+  </div>
 </div>

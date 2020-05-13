@@ -8,7 +8,7 @@ class MatchesController < ApplicationController
 
   def new
     @game = Game.find_by(slug: params["game"]) || nil
-    @games = Game.all
+    @games = Game.all - [@game]
     @match = Match.new(game: @game)
   end
 

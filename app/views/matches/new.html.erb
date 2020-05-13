@@ -1,46 +1,53 @@
 <div class="new-match">
 
   <% if @game %>
-    <%= render partial: "game_select" %>
+    <div class="match">
 
-    <%= form_with model: @match, class: "form" do |f| %>
-      <%= f.hidden_field(:game_id, value: @game.id) %>
-      <div class="basics">
-        <div>
-          <%= label_tag(:match_slots) do %>
-            Slots
-          <% end %>
-          <%=
-            f.number_field :slots,
-              value: @game.defaults["slots"],
-              placeholder: @game.defaults["slots"],
-              in: 2..@game.defaults["max"], step: 1
-          %>
-        </div>
+      <div class="selected-game">
+          <img src="<%= image_path('games/'+@game.slug+'.webp') %>">
+          <h2>Let's Play <strong><%= @game.name %>!</strong></h2>
 
-        <div>
-          <%= label_tag(:match_start_time) do %>
-            Start time (Eastern)
-          <% end %>
-          <%= f.time_field :start_time, value: "20:00:00", placeholder: "7:15" %>
-        </div>
-
-        <div>
-          <%= label_tag(:match_duration) do %>
-            Duration (mins)
-          <% end %>
-          <%= f.number_field :duration, placeholder: 60, value: 60, in: 15..3600 %>
-        </div>
+          <%= render partial: "game_form" %>
       </div>
 
-      <%= label_tag(:match_description) do %>
-        Describe
-      <% end %>
-      <%= f.text_area :description, size: "60x5" %>
 
-      <%= f.submit "Create Match" %>
+      <div class="sidebar">
 
-    <% end %>
+        <div class="instructions">
+          <h3>Hankering for some teamplay?</h3>
+
+            <ol>
+              <li>
+                Modify the prefilled description with relevant info and it will be
+                sent to Discord.
+              </li>
+              <li>
+                You will be given the first slot automatically and a notification
+                will be sent to Discord.
+              </li>
+              <li>
+                Everyone interested in that game will be notified
+                and can join by clicking the link in Discord.
+              </li>
+            </ol>
+
+          <p>
+            Thanks for planning ahead!
+          </p>
+          <p>
+            <strong>GLHFDD</strong>
+          </p>
+        </div>
+
+        <div class="others">
+          <div class="title">Other Games</div>
+          <%= render partial: "game_select", locals: {small: true} %>
+        </div>
+      </div>
+    </div>
+
+
+
   <% else %>
     <%= render partial: "game_select" %>
   <% end %>

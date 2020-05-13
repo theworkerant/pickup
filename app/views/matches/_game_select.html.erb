@@ -1,16 +1,14 @@
+<% small ||= false %>
 <div
-  class="games"
-  style="
-    grid-template-columns: <%= ("1fr " * @games.length)  %>;
-    max-width: <%= (300 * @games.length) %>px;
-  "
+  class="games <%= small ? 'small' : '' %>"
+  style="grid-template-columns: <%= small ? "1fr 1fr 1fr" : ("1fr " * @games.length)  %>;"
 >
   <% @games.each do |game| %>
     <% selected = @game && @game.slug === game.slug %>
     <div class="game <%= selected ? 'selected' : '' %>">
       <a href="<%= selected ? "#" : new_match_path(game: game.slug) %>">
         <img src="<%= image_path('games/'+game.slug+'.webp') %>">
-        <h3><%= game.name %></h3>
+        <h3><%= small ? game.slug : game.name %></h3>
       </a>
     </div>
   <% end %>

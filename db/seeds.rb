@@ -6,11 +6,59 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+tf2_desc= %Q(
+Casual / Comp / TF2Center / MGE / Ulti-Duo / Scrims
+
+Optional warmup 20 minutes before start time
+
+Server info: < reserve ahead with https://na.serveme.tf/ for free server >
+).strip
+
+drg_desc= %Q(
+Deep Dive / Casual
+).strip
+
+reflex_desc= %Q(
+FFA / Teams / Game Modifiers?
+).strip
 
 [
-  ["Deep Rock Galactic", "drg", {slots: 4, max: 4}],
-  ["Team Fortress 2", "tf2", {slots: 6, max: 24}],
-  ["Reflex Arena", "reflex", {slots: 2, max: 10}]
-].each do |(game,slug,defaults)|
-  Game.create(name: game, slug: slug, defaults: defaults)
+  {
+    name: "Deep Rock Galactic",
+    slug: "drg",
+    defaults: {
+      slots: 4,
+      max: 4,
+      description: drg_desc
+    }
+  },
+  {
+    name: "Team Fortress 2",
+    slug: "tf2",
+    defaults: {
+      slots: 6,
+      max: 24,
+      description: tf2_desc
+    }
+  },
+  {
+    name: "Reflex Arena",
+    slug: "reflex",
+    defaults: {
+      slots: 2,
+      max: 10,
+      description: reflex_desc
+    }
+  },
+  {
+    name: "Go",
+    slug: "go",
+    defaults: {
+      slots: 2,
+      max: 10,
+      description: ""
+    }
+  }
+].each do |game|
+  Game.create(game)
 end
