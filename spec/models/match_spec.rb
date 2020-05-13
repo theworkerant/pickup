@@ -7,14 +7,20 @@ RSpec.describe Match, type: :model do
     kate = User.create(username: "kate")
     white = User.create(username: "white")
     vince = User.create(username: "vince")
-    match = Match.create(host: kate, slots: 2)
+    match = Match.create(game: game, host: kate, slots: 2)
 
     # Kate joins automagically
+    expect(match.slots_remaining).to eq(1)
+    match.reserve(kate)
+    # But she can't join twice
     expect(match.slots_remaining).to eq(1)
 
     match.reserve(white)
     expect(match.slots_remaining).to eq(0)
 
+    match.relinquish(kate)
+    expect(match.slots_remaining).to eq(1)
+    # relinquishing twice doesn't explode
     match.relinquish(kate)
     expect(match.slots_remaining).to eq(1)
 

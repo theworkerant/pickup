@@ -1,4 +1,34 @@
-<div class="match-created">
-  Check Discord!
-  <%= @match.id %>
+<div class="match-page">
+  <h1><%= @match.game.name %></h1>
+
+  <%= @match.formatted_time %>
+
+  <br>
+  <br>
+  <br>
+
+  <h2>Reservations</h2>
+
+  <div class="links">
+    <% if @match.reserved?(@current_user) %>
+      <a href="<%= match_relinquish_path(@match) %>">
+        relinquish my slot!
+      </a>
+    <% else %>
+      <a href="<%= match_reserve_path(@match) %>">
+        reserve a slot!
+      </a>
+    <% end %>
+  </div>
+  <div class="reservations">
+
+    <% @match.reservations.each do |res| %>
+      <div class="player">
+        <img src="<%= res.user.picture ? res.user.picture : asset_url('logo.png')  %>" alt="avatar">
+        <div class="name">
+          <%= res.user.username %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

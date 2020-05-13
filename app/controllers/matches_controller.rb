@@ -24,7 +24,19 @@ class MatchesController < ApplicationController
   end
 
   def show
-    @match = Match.find(params["id"])
+    @match = Match.where("id = ?", params["id"]).includes(reservations: [:user]).first
+  end
+
+  def reserve
+    @match = Match.find(params["match_id"])
+    @match.reserve(current_user)
+    redirect_to match_path(@match)
+  end
+
+  def relinquish
+    @match = Match.find(params["match_id"])
+    @match.relinquish(current_user)
+    redirect_to match_path(@match)
   end
 
   private

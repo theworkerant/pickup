@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_210605) do
+ActiveRecord::Schema.define(version: 2020_05_13_202558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_210605) do
     t.json "defaults"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["slug"], name: "index_games_on_slug", unique: true
   end
 
   create_table "matches", force: :cascade do |t|
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_210605) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["match_id", "user_id"], name: "index_reservations_on_match_id_and_user_id", unique: true
     t.index ["match_id"], name: "index_reservations_on_match_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end

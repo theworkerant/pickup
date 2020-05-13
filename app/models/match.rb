@@ -8,11 +8,19 @@ class Match < ApplicationRecord
   after_create :reserve_host
 
   def reserve(user)
-    self.reservations.create(user: user)
+    begin
+      self.reservations.create(user: user)
+    rescue ActiveRecord::RecordNotUnique
+      false
+    end
+  end
+
+  def reserved?(user)
+    self.reservations.where(user_id: user.id).present?
   end
 
   def relinquish(user)
-    self.reservations.where(user_id: user.id).first.destroy
+    self.reservations.where(user_id: user.id).first&.destroy
   end
 
   def slots_remaining
@@ -38,7 +46,7 @@ class Match < ApplicationRecord
       description(match.description)
       add_field(name: "Total Slots", value: "#{match.slots} slots")
       add_field(name: "Time", value: match.formatted_time)
-      add_field(name: "I'll Play!", value: "[click to reserve](#{ENV['HOST_URL']}/matches/#{match.id})")
+      add_field(name: "I'll Play!", value: "[ click to reserve ](#{ENV['HOST_URL']}/matches/#{match.id}/reserve)")
       thumbnail(url: match.host.picture)
       image(url: match.image_url("games/#{match.game.slug}.webp"))
       timestamp(DateTime.now)
@@ -55,6 +63,7 @@ class Match < ApplicationRecord
   private
 
   def reserve_host
-    self.reservations.create(user: host)
+
+    self.reservations.create(user: self.host)
   end
 end
