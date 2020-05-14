@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     unless user_signed_in?
+      session[:return_to] = request.env["PATH_INFO"]
       redirect_to root_path
     end
   end
