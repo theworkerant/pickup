@@ -11,7 +11,7 @@
   <br>
   <br>
 
-  <h2><%= @match.slots_remaining %> Slots Left</h2>
+  <h2><%= pluralize(@match.slots_remaining, "Slot") %> Left</h2>
 
 
   <div class="links">
