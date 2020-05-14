@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_202558) do
+ActiveRecord::Schema.define(version: 2020_05_14_174306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_202558) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "ringer", default: false
     t.index ["match_id", "user_id"], name: "index_reservations_on_match_id_and_user_id", unique: true
     t.index ["match_id"], name: "index_reservations_on_match_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"

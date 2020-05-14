@@ -2,33 +2,54 @@
   <h1><%= @match.game.name %></h1>
 
   <%= @match.formatted_time %>
+  <pre>
+    <%= @match.description %>
+  </pre>
+
 
   <br>
   <br>
   <br>
 
-  <h2>Reservations</h2>
+  <h2><%= @match.slots_remaining %> Slots Left</h2>
+
 
   <div class="links">
     <% if @match.reserved?(@current_user) %>
-      <a href="<%= match_relinquish_path(@match) %>">
-        relinquish my slot!
+      <% if @match.ringer?(@current_user) && !@match.full? %>
+        <a class="reservation-link" href="<%= match_reserve_path(@match) %>">
+          Put me in coach!
+        </a>
+      <% end %>
+      <a class="reservation-link" href="<%= match_relinquish_path(@match) %>">
+        Nevermind! I can't make it.
       </a>
     <% else %>
-      <a href="<%= match_reserve_path(@match) %>">
-        reserve a slot!
+      <a class="reservation-link" href="<%= match_reserve_path(@match) %>">
+        <% if @match.full? %>
+          Let me know if a slot opens!
+        <% else %>
+          Reserve my slot!
+        <% end %>
       </a>
     <% end %>
   </div>
   <div class="reservations">
-
-    <% @match.reservations.each do |res| %>
-      <div class="player">
-        <img src="<%= res.user.picture ? res.user.picture : asset_url('logo.png')  %>" alt="avatar">
-        <div class="name">
-          <%= res.user.username %>
-        </div>
-      </div>
+    <% (0..@match.slots-1).each do |i| %>
+      <% player = @match.players[i] %>
+      <% if player %>
+        <%= render partial: "slot", locals: {player: player, me: player == @current_user} %>
+      <% else %>
+        <%= render partial: "empty_slot" %>
+      <% end %>
     <% end %>
-  </div>
+    <% if @match.ringers.present? %>
+      <% @match.ringers.each do |ringer| %>
+        <%= render partial: "slot", locals: {player: ringer, ringer: true} %>
+      <% end %>
+    <% else %>
+      <% if @match.full? %>
+        <%= render partial: "empty_slot", locals: {ringer: true} %>
+      <% end %>
+    <% end %>
 </div>

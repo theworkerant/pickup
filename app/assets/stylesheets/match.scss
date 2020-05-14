@@ -4,32 +4,82 @@
   background-color: lighten($background, 10);
   text-align: center;
   padding: 1rem;
+
+  .reservation-link {
+    background-color: darken($purple, 10);
+    text-align: center;
+    color: white;
+    padding: 0.4rem;
+    margin: 0 1rem;
+    width: 200px;
+    display: inline-block;
+    border: 2px solid transparent;
+    &:hover {
+      border: 2px solid $purple;
+    }
+  }
+
   .reservations {
     $player-box: 100px;
-    $cols: 4;
+    $cols: 6;
     display: grid;
     grid-template-columns: repeat($cols, 1fr);
-    grid-auto-rows: minmax(100px, 200px);
+    grid-auto-rows: minmax(100px, auto);
     font-weight: bold;
     max-width: $player-box * $cols;
-    margin: 0 auto;
+    margin: 2rem auto;
 
-    .player {
+    .player,
+    .empty {
       $pad: 10px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       padding: $pad;
-      img {
-        border: 2px solid $purple;
+
+      .avatar {
+        border-color: $purple;
+        border-style: solid;
+        border-width: 3px;
         width: $player-box - $pad * 2;
         height: $player-box - $pad * 2;
         object-fit: cover;
         border-radius: $player-box / 2;
       }
       .name {
+        line-height: 1.5rem;
         margin-top: 0.2rem;
+      }
+      &.me .avatar {
+        border-color: $green;
+      }
+    }
+    .ringer .avatar {
+      border-style: dotted;
+    }
+    .empty {
+      .avatar {
+        border-color: desaturate($purple, 40);
+      }
+      &:hover {
+        .avatar {
+          border-color: $purple;
+        }
+        .name {
+          color: $purple;
+        }
+      }
+      &.ringer:hover {
+        .avatar {
+          border: 3px dotted $purple;
+        }
+      }
+      .name {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        font-weight: normal;
+        color: white;
       }
     }
   }

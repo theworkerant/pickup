@@ -1,0 +1,7 @@
+<% ringer ||= false %>
+<div class="player <%= ringer ? 'ringer' : '' %> <%= me ? 'me' : '' %>">
+  <img class="avatar" src="<%= player.picture ? player.picture : asset_url('logo.png')  %>" alt="avatar">
+  <div class="name">
+    <%= player.username %>
+  </div>
+</div>
