@@ -22,14 +22,15 @@ class Notifications
   end
 
   def self.announce_match(match)
+    image = image_url("games/#{match.game.slug}.webp")
     embed = Discord::Embed.new do
       title("#{match.host.username} wants to play #{match.game.name}")
       description(match.description)
       add_field(name: "Total Slots", value: "#{match.slots} slots")
       add_field(name: "Time", value: match.formatted_time)
-      add_field(name: "I'll Play!", value: "[ click to reserve ](match.reserve_url)")
+      add_field(name: "I'll Play!", value: "[>> CLICK TO RESERVE <<](#{match.reserve_url})")
       thumbnail(url: match.host.picture)
-      image(url: match.image_url("games/#{match.game.slug}.webp"))
+      image(url: image)
       timestamp(DateTime.now)
       footer(text: "pickup.fathom.digital")
     end
@@ -47,11 +48,12 @@ class Notifications
     end
   end
 
-  def image_url(name)
+
+  private
+  def self.image_url(name)
     ENV["HOST_URL"] + ActionController::Base.helpers.asset_url(name)
   end
 
-  private
   def self.notify(message)
     Discord::Notifier.message(message) unless Rails.env.test?
   end

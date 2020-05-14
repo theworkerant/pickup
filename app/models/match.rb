@@ -65,13 +65,13 @@ class Match < ApplicationRecord
   end
 
   def announce
-    Notifications.announce_match(match)
-    Notifications.announce_match(host, game.interested)
+    Notifications.announce_match(self)
+    Notifications.mention_match_for_interested(host, game.interested)
   end
 
   private
 
   def reserve_host
-    reservations.create(user: self.host)
+    reservations.create(user: host)
   end
 end
