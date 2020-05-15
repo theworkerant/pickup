@@ -6,6 +6,11 @@ class Match < ApplicationRecord
   has_many :users, through: :reservations
 
   after_create :reserve_host
+  before_create :generate_name
+
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
 
   def players
     reservations.includes(:user).where(ringer: false).map{|r| r.user}
@@ -49,15 +54,35 @@ class Match < ApplicationRecord
   end
 
   def formatted_start
-    start_time.strftime("%I:%M %p")
+    start_time.strftime("%a %l:%M %p")
   end
 
   def formatted_end
-    (start_time + duration.minutes).strftime("%I:%M %p")
+    (start_time + duration.minutes).strftime("%l:%M %p")
+  end
+
+  def start_datetime
+    day + start_time.seconds_since_midnight.seconds
+  end
+
+  def time_until_start
+    remaining_seconds = (start_time - Time.zone.now)
+
+    days = (remaining_seconds / 86400).floor
+    hours = ((remaining_seconds - days * 86400) / 3600).floor
+    minutes = ((remaining_seconds - days  * 86400 - hours * 3600) / 60).floor
+    {days: days, hours: hours, minutes: minutes}
+  end
+
+  def formatted_time_until_start
+    from_now = time_until_start.reduce([]) do |memo, (key,value)|
+      memo << "#{value}#{key[0]}" if value > 0
+      memo
+    end.join(" ")
   end
 
   def formatted_time
-    "#{formatted_start} / #{formatted_end} Eastern"
+    "#{formatted_start} / #{formatted_end} Eastern (starts in #{formatted_time_until_start})"
   end
 
   def reserve_url
@@ -70,6 +95,13 @@ class Match < ApplicationRecord
   end
 
   private
+  def generate_name
+    random = Random.new(1337)
+    matches_count = Match.count
+    self.name = [MATCH_ADJECTIVES, MATCH_NOUNS].reduce([]) do |memo, words|
+      memo << words.shuffle(random: random)[matches_count]
+    end.join(" ")
+  end
 
   def reserve_host
     reservations.create(user: host)

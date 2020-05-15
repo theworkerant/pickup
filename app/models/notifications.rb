@@ -1,13 +1,13 @@
 class Notifications
   def self.player_reserved(match, player)
     if match.ringers.count > 0
-      notify("<@#{player.uid}> wants to join but slots are full! They've been added as a possible ringer.")
+      notify("<@#{player.uid}> wants to **#{match.name}** join but slots are full! They've been added as a possible ringer.")
     elsif match.slots_remaining == 0
       notify("
-      <@#{player.uid}> just joined and the match is **now full**!! However! _You can still [join as a ringer](#{match.reserve_url})_ and you'll be notified if a slot opens up.
+      <@#{player.uid}> just joined and **#{match.name}** is **now full**!! However! _You can still [queue as a ringer](#{match.reserve_url})_ and you'll be notified if a slot opens up.
       ")
     else
-      notify("<@#{player.uid}> just joined, **#{match.slots_remaining}** slots left.")
+      notify("<@#{player.uid}> just joined **#{match.name}**, **#{match.slots_remaining}** slots left... [reserve now](#{match.reserve_url})!")
     end
   end
 
@@ -17,7 +17,7 @@ class Notifications
         "<@!#{ringer.uid}>"
       end.join(" ")
 
-      notify("#{mentions} A slot is now available! [click to reserve](#{match.reserve_url})")
+      notify("#{mentions} A slot is now available in **#{match.name}**! [click to reserve](#{match.reserve_url})")
     end
   end
 
@@ -26,6 +26,7 @@ class Notifications
     embed = Discord::Embed.new do
       title("#{match.host.username} wants to play #{match.game.name}")
       description(match.description)
+      add_field(name: "Match Name", value: "**#{match.name}**")
       add_field(name: "Total Slots", value: "#{match.slots} slots")
       add_field(name: "Time", value: match.formatted_time)
       add_field(name: "I'll Play!", value: "[>> CLICK TO RESERVE <<](#{match.reserve_url})")

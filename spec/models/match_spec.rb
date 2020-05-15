@@ -2,6 +2,17 @@ require "rails_helper"
 
 RSpec.describe Match, type: :model do
 
+  it "Generates names predictably" do
+    game = Game.create(name: "Dodgeball")
+    kate = User.create(username: "kate")
+    match = Match.create(game: game, host: kate, slots: 2)
+    match2 = Match.create(game: game, host: kate, slots: 2)
+
+    # Should be the same each time
+    expect(match.name).to eq("Amatory Setback")
+    expect(match2.name).to eq("Judicious Disruption")
+  end
+
   it "Match works" do
     game = Game.create(name: "Dodgeball")
     kate = User.create(username: "kate")

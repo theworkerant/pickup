@@ -24,7 +24,7 @@ class MatchesController < ApplicationController
   end
 
   def show
-    @match = Match.where("id = ?", params["id"]).includes(reservations: [:user]).first
+    @match = Match.where("id = ?", params["id"].to_i).includes(reservations: [:user]).first
   end
 
   def reserve
