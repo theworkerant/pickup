@@ -11,9 +11,15 @@
       until
       <span><strong><%= @match.formatted_end %></strong></span>
 
-      <div class="starts_in">
-        Starts in: <%= @match.formatted_time_until_start %>
-      </div>
+      <% if @match.start_time > Time.zone.now %>
+        <div class="starts_in">
+          Starts in: <%= @match.formatted_time_until_start %>
+        </div>
+      <% else %>
+        <div class="match_begun">
+          Match has begun!
+        </div>
+      <% end %>
     </div>
 
     <div class="markdown">
