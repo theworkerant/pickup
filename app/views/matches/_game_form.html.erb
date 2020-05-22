@@ -1,3 +1,4 @@
+<% @match.start_time = Match::DEFAULT_START %>
 <%= form_with model: @match, class: "form" do |f| %>
   <%= f.hidden_field(:game_id, value: @game.id) %>
 
@@ -19,7 +20,7 @@
         <%= label_tag(:match_start_time) do %>
           Start time (Eastern)
         <% end %>
-        <%= f.time_field :start_time, value: "20:00:00", placeholder: "7:15" %>
+        <%= f.datetime_field :start_time, {min: Time.zone.today, max: Time.zone.today + 7.days}%>
       </div>
 
       <div>

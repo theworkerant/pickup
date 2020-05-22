@@ -26,14 +26,16 @@ class Notifications
   end
 
   def announce_match(match)
+    text_art = "-=" * 5 + "-"
     image = image_url("games/#{match.game.slug}.webp")
     embed = Discord::Embed.new do
       title("#{match.host.username} wants to play #{match.game.name}")
-      description(match.description)
+      description("#{text_art*4}\n\n#{match.description}\n\n#{text_art*4}")
       add_field(name: "Match Name", value: "**#{match.name}**")
       add_field(name: "Total Slots", value: "#{match.slots} slots")
-      add_field(name: "Time", value: match.formatted_time)
-      add_field(name: "I'll Play!", value: "[>> CLICK TO RESERVE <<](#{match.reserve_url})")
+      add_field(name: "Time", value: "#{match.formatted_time}\n_That's in: #{match.formatted_time_until_start}_")
+      add_field(name: "I'll Play!", value: "[<#{text_art} CLICK TO RESERVE #{text_art}>](#{match.reserve_url})")
+
       thumbnail(url: match.host.picture)
       image(url: image)
       timestamp(DateTime.now)
