@@ -17,6 +17,6 @@ class Webhook < ApplicationRecord
     self.url = EncryptionService.encrypt(self.url)
   end
   def decrypt
-    self.url = EncryptionService.decrypt(self.url)
+    self.url = EncryptionService.decrypt(self.url) rescue nil
   end
 end
