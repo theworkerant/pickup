@@ -58,8 +58,6 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    attr_encrypted (3.1.0)
-      encryptor (~> 3.0.0)
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
@@ -86,7 +84,6 @@ GEM
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
-    encryptor (3.0.0)
     erubi (1.9.0)
     eventmachine (1.2.7)
     faraday (1.0.1)
@@ -292,7 +289,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  attr_encrypted (~> 3.1.0)
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
