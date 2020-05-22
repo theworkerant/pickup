@@ -37,7 +37,19 @@
       <%= f.text_area :description, value: @game.defaults["description"], size: "60x8" %>
     </div>
 
-    <%= f.submit "Create Match" %>
+    <div class="webhook">
+      <%= label_tag(:match_webhook_id) do %>
+        Send Announcement To:
+      <% end %>
+      <% options = grouped_options_for_select(@guild_hooks.map{|g| [g.name, g.hooks.map{|h| [h.name, h.id]}]}) %>
+      <%= f.select :webhook_id, options  %>
+      <div class="notice">
+        Please make sure you are actually in this channel...
+        spammers will be prosecuted to the full extent of the law.
+      </div>
+    </div>
+
+    <%= f.submit "Create Match & Notify Gamers" %>
   </div>
 
 <% end %>

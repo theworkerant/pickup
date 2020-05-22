@@ -1,5 +1,9 @@
 class Notifications
-  def self.player_reserved(match, player)
+  def initialize(hook)
+    @hook = hook
+  end
+
+  def player_reserved(match, player)
     if match.ringers.count > 0
       notify("<@#{player.uid}> wants to **#{match.name}** join but slots are full! They've been added as a possible ringer.")
     elsif match.slots_remaining == 0
@@ -11,7 +15,7 @@ class Notifications
     end
   end
 
-  def self.player_relinquished(match)
+  def player_relinquished(match)
     if match.ringers.count > 0
       mentions = match.ringers.map do |ringer|
         "<@!#{ringer.uid}>"
@@ -21,7 +25,7 @@ class Notifications
     end
   end
 
-  def self.announce_match(match)
+  def announce_match(match)
     image = image_url("games/#{match.game.slug}.webp")
     embed = Discord::Embed.new do
       title("#{match.host.username} wants to play #{match.game.name}")
@@ -39,7 +43,7 @@ class Notifications
     notify(embed)
   end
 
-  def self.mention_match_for_interested(host, interested)
+  def mention_match_for_interested(host, interested)
     mentions = (interested-[host]).map do |user|
       "<@!#{user.uid}>"
     end.join(" ")
@@ -49,13 +53,12 @@ class Notifications
     end
   end
 
-
   private
-  def self.image_url(name)
+  def image_url(name)
     ENV["HOST_URL"] + ActionController::Base.helpers.asset_url(name)
   end
 
-  def self.notify(message)
-    Discord::Notifier.message(message) unless Rails.env.test?
+  def notify(message)
+    Discord::Notifier.message(message, url: @hook.url) unless Rails.env.test?
   end
 end

@@ -1,6 +1,7 @@
 class Match < ApplicationRecord
   belongs_to :game
   belongs_to :host, class_name: "User", foreign_key: "user_id"
+  belongs_to :webhook
 
   has_many :reservations
   has_many :users, through: :reservations
@@ -90,11 +91,15 @@ class Match < ApplicationRecord
   end
 
   def announce
-    Notifications.announce_match(self)
-    Notifications.mention_match_for_interested(host, game.interested)
+    notifier.announce_match(self)
+    notifier.mention_match_for_interested(host, game.interested)
   end
 
   private
+  def notifier
+    @notifier ||= Notifications.new(self.webhook)
+  end
+
   def generate_name
     random = Random.new(1337)
     matches_count = Match.count
