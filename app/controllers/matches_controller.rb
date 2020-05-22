@@ -7,9 +7,9 @@ class MatchesController < ApplicationController
   end
 
   def new
-    @guild_hooks = Webhook.with_guilds(current_user.discord_api.guilds)
     @game = Game.find_by(slug: params["game"]) || nil
     @games = Game.all - [@game]
+    @guild_hooks = Webhook.with_guilds(current_user.discord_api.guilds) if @game
     @match = Match.new(game: @game)
   end
 
