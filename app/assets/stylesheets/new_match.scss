@@ -153,6 +153,13 @@
 
         padding: 0.2rem;
       }
+      .description {
+        display: flex;
+        flex-direction: column;
+        textarea {
+          margin: 1rem auto;
+        }
+      }
       .basic-fields {
         display: flex;
         justify-content: space-between;

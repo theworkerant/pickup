@@ -9,6 +9,8 @@ class Match < ApplicationRecord
   after_create :reserve_host
   before_create :generate_name
 
+  DEFAULT_START = ActiveSupport::TimeZone["EST"].parse("#{Time.zone.now.to_date} 6pm")
+
   def to_param
     "#{id}-#{name.parameterize}"
   end
@@ -83,7 +85,11 @@ class Match < ApplicationRecord
   end
 
   def formatted_time
-    "#{formatted_start} / #{formatted_end} Eastern (starts in #{formatted_time_until_start})"
+    "#{formatted_start} / #{formatted_end} Eastern"
+  end
+
+  def formatted_time_until
+     "starts in #{formatted_time_until_start}"
   end
 
   def reserve_url
@@ -111,4 +117,5 @@ class Match < ApplicationRecord
   def reserve_host
     reservations.create(user: host)
   end
+
 end
