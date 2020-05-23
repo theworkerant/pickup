@@ -9,6 +9,7 @@ class MatchesController < ApplicationController
   def new
     @game = Game.find_by(slug: params["game"]) || nil
     @games = Game.all - [@game]
+    @guild_hooks = Webhook.with_guilds(current_user.discord_api.guilds) if @game
     @match = Match.new(game: @game)
   end
 
@@ -42,6 +43,6 @@ class MatchesController < ApplicationController
   private
 
   def match_params
-    params.require(:match).permit(:game_id, :slots, :start_time, :duration, :description)
+    params.require(:match).permit(:game_id, :webhook_id, :slots, :start_time, :duration, :description)
   end
 end

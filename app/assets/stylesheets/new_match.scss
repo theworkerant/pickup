@@ -153,6 +153,13 @@
 
         padding: 0.2rem;
       }
+      .description {
+        display: flex;
+        flex-direction: column;
+        textarea {
+          margin: 1rem auto;
+        }
+      }
       .basic-fields {
         display: flex;
         justify-content: space-between;
@@ -165,8 +172,19 @@
           flex-direction: column;
         }
       }
+      .webhook {
+        select {
+          font-size: 1.5rem;
+          margin: 0.5rem 0;
+        }
+        .notice {
+          font-style: italic;
+          color: #ccc;
+        }
+      }
 
       input[type="submit"] {
+        margin-top: 2rem;
         background-color: $purple;
         color: white;
         cursor: pointer;

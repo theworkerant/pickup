@@ -1,12 +1,15 @@
 class Match < ApplicationRecord
   belongs_to :game
   belongs_to :host, class_name: "User", foreign_key: "user_id"
+  belongs_to :webhook
 
   has_many :reservations
   has_many :users, through: :reservations
 
   after_create :reserve_host
   before_create :generate_name
+
+  DEFAULT_START = ActiveSupport::TimeZone["EST"].parse("#{Time.zone.now.to_date} 6pm")
 
   def to_param
     "#{id}-#{name.parameterize}"
@@ -82,7 +85,11 @@ class Match < ApplicationRecord
   end
 
   def formatted_time
-    "#{formatted_start} / #{formatted_end} Eastern (starts in #{formatted_time_until_start})"
+    "#{formatted_start} / #{formatted_end} Eastern"
+  end
+
+  def formatted_time_until
+     "starts in #{formatted_time_until_start}"
   end
 
   def reserve_url
@@ -90,11 +97,15 @@ class Match < ApplicationRecord
   end
 
   def announce
-    Notifications.announce_match(self)
-    Notifications.mention_match_for_interested(host, game.interested)
+    notifier.announce_match(self)
+    notifier.mention_match_for_interested(host, game.interested)
   end
 
   private
+  def notifier
+    @notifier ||= Notifications.new(self.webhook)
+  end
+
   def generate_name
     random = Random.new(1337)
     matches_count = Match.count
@@ -106,4 +117,5 @@ class Match < ApplicationRecord
   def reserve_host
     reservations.create(user: host)
   end
+
 end
