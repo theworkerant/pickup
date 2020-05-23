@@ -1,0 +1,7 @@
+<% ringer ||= false %>
+<a href="<%= match_reserve_path(@match) %>">
+  <div class="empty <%= ringer ? 'ringer' : '' %>">
+    <div class="avatar"></div>
+    <div class="name"><%= ringer ? 'ringer' : 'open' %></div>
+  </div>
+</a>

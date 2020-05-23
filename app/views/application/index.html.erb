@@ -1,6 +1,6 @@
 <div class="splash">
 
-  <a class="login-with-discord" href="/auth/discord">
+  <a class="login-with-discord" href="/auth/discord?origin=<%= session[:return_to] %>">
     Login with
     <img src="<%= image_path('discord.svg') %>" alt="discord-logo">
   </a>

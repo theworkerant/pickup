@@ -12,6 +12,7 @@ Casual / Comp / TF2Center / MGE / Ulti-Duo / Scrims
 Optional warmup 20 minutes before start time
 
 Server info: < reserve ahead with https://na.serveme.tf/ for free server >
+[Useful Server Commands](https://wiki.teamfortress.com/wiki/List_of_useful_console_commands#mp_commands)
 ).strip
 
 drg_desc= %Q(

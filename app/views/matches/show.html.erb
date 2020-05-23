@@ -1,4 +1,79 @@
-<div class="match-created">
-  Check Discord!
-  <%= @match.id %>
+<div class="match-page">
+  <div class="title">
+    <h1 class="match-name"><%= @match.name %></h1>
+  </div>
+
+  <div class="info">
+    <h2 class="game-name"><%= @match.game.name %></h2>
+
+    <div class="start">
+      <span><strong><%= @match.formatted_start %></strong></span>
+      until
+      <span><strong><%= @match.formatted_end %></strong></span>
+
+      <% if @match.start_time > Time.zone.now %>
+        <div class="starts_in">
+          Starts in: <%= @match.formatted_time_until_start %>
+        </div>
+      <% else %>
+        <div class="match_begun">
+          Match has begun!
+        </div>
+      <% end %>
+    </div>
+
+    <div class="markdown">
+      <%= Kramdown::Document.new(@match.description).to_html.html_safe %>
+    </div>
+
+    <h2><%= pluralize(@match.slots_remaining, "Slot") %> Left</h2>
+
+    <div class="links">
+      <% if @match.reserved?(@current_user) %>
+        <% if @match.ringer?(@current_user) && !@match.full? %>
+          <a class="reservation-link" href="<%= match_reserve_path(@match) %>">
+            Put me in coach!
+          </a>
+        <% end %>
+        <a class="reservation-link" href="<%= match_relinquish_path(@match) %>">
+          Nevermind! I can't make it.
+        </a>
+      <% else %>
+        <a class="reservation-link" href="<%= match_reserve_path(@match) %>">
+          <% if @match.full? %>
+            Let me know if a slot opens!
+          <% else %>
+            Reserve my slot!
+          <% end %>
+        </a>
+      <% end %>
+    </div>
+    <% max_columns = @match.slots < 6 ? @match.slots : 6 %>
+    <% player_box = 100 %>
+    <div
+      class="reservations"
+      style="
+        grid-template-columns: repeat(<%= max_columns %>, 1fr);
+        max-width: <%= max_columns * 120 %>px;
+      "
+    >
+      <% (0..@match.slots-1).each do |i| %>
+        <% player = @match.players[i] %>
+        <% if player %>
+          <%= render partial: "slot", locals: {player: player, me: player == @current_user} %>
+        <% else %>
+          <%= render partial: "empty_slot" %>
+        <% end %>
+      <% end %>
+      <% if @match.ringers.present? %>
+        <% @match.ringers.each do |ringer| %>
+          <%= render partial: "slot", locals: {player: ringer, ringer: true} %>
+        <% end %>
+      <% else %>
+        <% if @match.full? %>
+          <%= render partial: "empty_slot", locals: {ringer: true} %>
+        <% end %>
+      <% end %>
+  </div>
+  </div>
 </div>

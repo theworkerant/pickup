@@ -6,7 +6,15 @@ class User < ApplicationRecord
 			user.username = auth.info.name
 			user.email = auth.info.email
 			user.picture = auth.info.image
+			user.credentials = EncryptionService.encrypt(auth.credentials.to_json)
 			user.save!
 		end
 	end
+
+  def discord_api
+    @discord ||= PickupDiscord.new(creds.token)
+  end
+  def creds
+    OpenStruct.new(JSON.parse(EncryptionService.decrypt(credentials)))
+  end
 end
