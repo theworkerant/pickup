@@ -1,0 +1,56 @@
+<% @match.start_time = Match::DEFAULT_START %>
+<%= form_with model: @match, class: "form" do |f| %>
+  <%= f.hidden_field(:game_id, value: @game.id) %>
+
+  <div class="fields">
+    <div class="basic-fields">
+      <div>
+        <%= label_tag(:match_slots) do %>
+          Slots
+        <% end %>
+        <%=
+          f.number_field :slots,
+            value: @game.defaults["slots"],
+            placeholder: @game.defaults["slots"],
+            in: 2..@game.defaults["max"], step: 1
+        %>
+      </div>
+
+      <div>
+        <%= label_tag(:match_start_time) do %>
+          Start time (Eastern)
+        <% end %>
+        <%= f.datetime_field :start_time, {min: Time.zone.today, max: Time.zone.today + 7.days}%>
+      </div>
+
+      <div>
+        <%= label_tag(:match_duration) do %>
+          Duration (mins)
+        <% end %>
+        <%= f.number_field :duration, placeholder: 60, value: 60, in: 15..3600 %>
+      </div>
+    </div>
+
+    <div class="description">
+      <%= label_tag(:match_description) do %>
+      Description! Game mode, connect info, players needed, etc.
+      <% end %>
+      <%= f.text_area :description, value: @game.defaults["description"], size: "60x8" %>
+    </div>
+
+    <div class="webhook">
+      <%= label_tag(:match_webhook_id) do %>
+        Send Announcement To:
+      <% end %>
+      <% options = grouped_options_for_select(@guild_hooks.map{|g| [g.name, g.hooks.map{|h| [h.name, h.id]}]}) %>
+      <%= f.select :webhook_id, options  %>
+      <div class="notice">
+        Please make sure you are actually in this channel...
+        spammers will be prosecuted to the full extent of the law.
+      </div>
+    </div>
+
+    <%= f.submit "Create Match & Notify Gamers" %>
+  </div>
+
+<% end %>

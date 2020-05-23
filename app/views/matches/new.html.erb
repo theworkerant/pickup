@@ -1,0 +1,52 @@
+<div class="new-match">
+  <% if @game %>
+    <div class="match">
+
+      <div class="selected-game">
+          <img src="<%= image_path('games/'+@game.slug+'.webp') %>">
+          <h2>Let's Play <strong><%= @game.name %>!</strong></h2>
+
+          <%= render partial: "game_form" %>
+      </div>
+
+      <div class="sidebar">
+
+        <div class="instructions">
+          <h3>Hankering for some teamplay?</h3>
+
+            <ol>
+              <li>
+                Modify the prefilled description with relevant info and it will be
+                sent to Discord.
+              </li>
+              <li>
+                You will be given the first slot automatically and a notification
+                will be sent to Discord.
+              </li>
+              <li>
+                Everyone interested in that game will be notified
+                and can join by clicking the link in Discord.
+              </li>
+            </ol>
+
+          <p>
+            Thanks for planning ahead!
+          </p>
+          <p>
+            <strong>GLHFDD</strong>
+          </p>
+        </div>
+
+        <div class="others">
+          <div class="title">Other Games</div>
+          <%= render partial: "game_select", locals: {small: true} %>
+        </div>
+      </div>
+    </div>
+
+
+
+  <% else %>
+    <%= render partial: "game_select" %>
+  <% end %>
+</div>

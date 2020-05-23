@@ -1,0 +1,194 @@
+@import "variables";
+
+.new-match {
+  display: flex;
+  flex-direction: column;
+  background-color: lighten($background, 5);
+
+  .match {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+      "sidebar sidebar game game game game"
+      "sidebar sidebar form form form form";
+
+    .selected-game {
+      grid-area: game;
+      position: relative;
+      margin: 0 1rem;
+      margin-top: 1rem;
+      h2 {
+        position: absolute;
+        font-weight: normal;
+        top: 0;
+        left: 0;
+        margin: 1rem 0;
+        padding: 0 2rem;
+        color: white;
+        font-size: 2rem;
+        background-color: darken($purple, 20);
+        strong {
+          text-decoration: underline;
+        }
+      }
+      img {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        width: 100%;
+        object-fit: cover;
+        max-height: 350px;
+      }
+    }
+    .sidebar {
+      grid-area: sidebar;
+      margin: 0 1rem;
+      .others {
+        margin: 0 auto;
+        background-color: lighten($background, 15);
+        border-radius: 1rem;
+        padding: 0.5rem;
+        .title {
+          font-size: 1.2rem;
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+      .instructions {
+        grid-area: instructs;
+        background-color: lighten($background, 5);
+        font-size: 1.4rem;
+        padding: 1rem;
+        li {
+          line-height: 1.6rem;
+          margin-bottom: 0.75rem;
+        }
+      }
+    }
+  }
+
+  .games {
+    display: grid;
+    align-self: center;
+    width: 100%;
+    &.small {
+      .game {
+        img {
+          height: 80px;
+        }
+      }
+      h3 {
+        margin: 0.1rem;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+      }
+    }
+
+    .game {
+      max-width: 300px;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      a {
+        color: white;
+      }
+
+      &:hover img {
+        border: 2px solid lighten($purple, 10);
+        transform: scale(1.1);
+      }
+
+      &.selected:hover img {
+        transform: scale(1);
+      }
+
+      &.selected {
+        h3 {
+          color: $purple;
+        }
+        img {
+          border: 2px solid lighten($purple, 10);
+        }
+      }
+      img {
+        object-fit: cover;
+        border: 2px solid transparent;
+        margin: 5px 2px;
+        border-radius: 1rem;
+        width: 100%;
+        height: 150px;
+      }
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: row;
+    grid-area: form;
+    background-color: lighten($background, 10);
+
+    input,
+    textarea {
+      font-family: "Jost", sans-serif;
+      font-size: 1.5rem;
+      border-radius: 0.5rem;
+      border: 2px solid lighten($purple, 20);
+      color: white;
+      background-color: transparent;
+      margin: 1rem 0;
+      padding: 0.5rem;
+    }
+
+    .fields {
+      grid-area: form;
+      margin: 2rem;
+      width: 100%;
+      label {
+        display: flex;
+        font-weight: bold;
+        background-color: desaturate($purple, 40);
+        color: white;
+        font-size: 1rem;
+
+        padding: 0.2rem;
+      }
+      .description {
+        display: flex;
+        flex-direction: column;
+        textarea {
+          margin: 1rem auto;
+        }
+      }
+      .basic-fields {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > div {
+          input {
+            display: flex;
+          }
+          display: flex;
+          flex-direction: column;
+        }
+      }
+      .webhook {
+        select {
+          font-size: 1.5rem;
+          margin: 0.5rem 0;
+        }
+        .notice {
+          font-style: italic;
+          color: #ccc;
+        }
+      }
+
+      input[type="submit"] {
+        margin-top: 2rem;
+        background-color: $purple;
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+}

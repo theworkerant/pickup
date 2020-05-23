@@ -4,6 +4,7 @@ class CreateMatches < ActiveRecord::Migration[6.0]
 
       t.belongs_to :game
       t.belongs_to :user
+      t.text :description
       t.datetime :start_time
       t.integer :duration
       t.integer :slots

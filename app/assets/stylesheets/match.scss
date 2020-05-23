@@ -1,0 +1,133 @@
+@import "variables";
+
+.match-page {
+  display: flex;
+  flex-direction: column;
+  .title {
+    z-index: 1;
+    margin-bottom: -2.5rem;
+    width: 100%;
+    text-align: center;
+
+    h1.match-name {
+      margin: 0;
+      background-color: darken($purple, 10);
+      text-align: center;
+      color: white;
+      line-height: 4rem;
+      padding: 0.5rem 6rem;
+      display: inline-block;
+      text-decoration: underline;
+      font-size: 2.5rem;
+    }
+  }
+
+  .info {
+    background-color: lighten($background, 15);
+    text-align: center;
+    padding: 1rem;
+    padding-top: 4rem;
+  }
+
+  h2.game-name {
+    color: #ccc;
+    font-size: 1.8rem;
+    margin: 0;
+  }
+
+  .markdown {
+    font-size: 1.3rem;
+    padding: 1rem;
+    overflow: scroll;
+    background-color: lighten($background, 20);
+    max-width: 700px;
+    margin: 1rem auto;
+  }
+
+  .start {
+    margin: 1.5rem 0;
+    .starts_in {
+      font-style: italic;
+    }
+  }
+
+  .reservation-link {
+    background-color: darken($purple, 10);
+    text-align: center;
+    color: white;
+    padding: 0.4rem;
+    margin: 0 1rem;
+    width: 200px;
+    display: inline-block;
+    border: 2px solid transparent;
+    &:hover {
+      border: 2px solid $purple;
+    }
+  }
+
+  .reservations {
+    $player-box: 100px;
+    display: grid;
+    font-weight: bold;
+    margin: 2rem auto;
+
+    > div,
+    a {
+      min-width: 106px;
+    }
+
+    .player,
+    .empty {
+      $pad: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: $pad;
+
+      .avatar {
+        border-color: $purple;
+        border-style: solid;
+        border-width: 3px;
+        width: $player-box - $pad * 2;
+        height: $player-box - $pad * 2;
+        object-fit: cover;
+        border-radius: $player-box / 2;
+      }
+      .name {
+        line-height: 1.5rem;
+        margin-top: 0.2rem;
+      }
+      &.me .avatar {
+        border-color: $green;
+      }
+    }
+    .ringer .avatar {
+      border-style: dotted;
+    }
+    .empty {
+      .avatar {
+        border-color: desaturate($purple, 40);
+      }
+      &:hover {
+        .avatar {
+          border-color: $purple;
+        }
+        .name {
+          color: $purple;
+        }
+      }
+      &.ringer:hover {
+        .avatar {
+          border: 3px dotted $purple;
+        }
+      }
+      .name {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        font-weight: normal;
+        color: white;
+      }
+    }
+  }
+}

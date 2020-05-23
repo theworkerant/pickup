@@ -3,11 +3,14 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authenticate
-    redirect_to "/" unless user_signed_in?
+    unless user_signed_in?
+      session[:return_to] = request.env["PATH_INFO"]
+      redirect_to root_path
+    end
   end
 
   def no_auth_allowed
-    redirect_to "/games" if user_signed_in?
+    redirect_to "/matches" if user_signed_in?
   end
 
   def current_user
@@ -15,7 +18,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_signed_in?
-    # converts current_user to a boolean by negating the negation
     !!current_user
   end
 

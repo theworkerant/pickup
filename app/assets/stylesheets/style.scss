@@ -1,39 +1,58 @@
+@import "variables";
+
 body {
-  background-color: #0f1720;
+  background-color: $background;
   color: white;
   font-family: "Jost", sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 a,
 a:visited {
-  color: #9849c9;
+  color: $purple;
   text-decoration: none;
 }
 
-$discord-blue: #7289da;
-
-.splash {
+.header {
   h1 {
     margin: 0;
   }
-  margin-top: 5rem;
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   .logo {
-    margin-top: 2rem;
-    width: 150px;
+    width: 80px;
   }
+  .navbar {
+    background-color: darken($purple, 10);
+    a {
+      margin: 0 1rem;
+      color: white;
+      font-size: 0.8rem;
+      &:hover {
+        text-decoration: overline;
+      }
+    }
+    text-transform: uppercase;
 
-  hr {
-    width: 70%;
-    border-color: darken(white, 50);
-    margin: 5rem 0;
+    padding: 0.2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
+}
+
+.splash {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
 
   a.login-with-discord {
+    max-width: 300px;
     border-right: 4px solid darken(#b69ed5, 15);
     border-bottom: 4px solid darken(#865cbb, 25);
     border-left: 4px solid transparent;

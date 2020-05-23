@@ -27,8 +27,13 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'omniauth-discord'
+gem 'discord-notifier'
 
 gem 'pg'
+
+gem 'kramdown'
+
+gem 'httparty'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
