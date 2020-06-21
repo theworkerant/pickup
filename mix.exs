@@ -20,7 +20,7 @@ defmodule Pickup.MixProject do
   def application do
     [
       mod: {Pickup.Application, []},
-      extra_applications: [:logger, :runtime_tools, :remix]
+      extra_applications: [:logger, :runtime_tools, :ueberauth_discord]
     ]
   end
 
@@ -49,7 +49,13 @@ defmodule Pickup.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:nostrum, "~> 0.4"},
       {:cowlib, "~> 2.8.0", override: true},
-      {:remix, "~> 0.0.1", only: :dev}
+      {:cortex, "~> 0.1", only: [:dev, :test]},
+      {:ueberauth, "~> 0.6"},
+      {:ueberauth_discord, "~> 0.5"},
+      {:guardian, "~> 2.1"},
+      {:cloak_ecto, "~> 1.0"},
+      {:oauth2, "~> 2.0"},
+      {:httpoison, "~> 1.6"}
     ]
   end
 

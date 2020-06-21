@@ -7,31 +7,68 @@ defmodule Pickup.BotConsumer do
 
   def start_link do
     Consumer.start_link(__MODULE__)
-    # send(self(), :init, )
-  end
-
-  def handle_event({:init, msg, _ws_state}) do
   end
 
   def handle_event({:MESSAGE_CREATE, msg, ws_state}) do
-    IO.inspect(ws_state)
+    if System.get_env("MIX_ENV") == "test" do
+      :ignore
+    else
+      case msg.content do
+        "ping!" ->
+          embed =
+            %Nostrum.Struct.Embed{}
+            |> put_title("testing embed update .... wait for it...")
+            |> put_description("
+```
+Frisbee says,
 
-    case msg.content do
-      "ping!" ->
-        embed =
-          %Nostrum.Struct.Embed{}
-          |> put_title("testing embed update .... wait for it...")
-          |> put_description("lots of slots open! [ ] [ ] [ ] [ ] [ ] [ ]")
-          |> put_footer("pickup.fathom.digital")
+> Let's battle and hope we don't get team switch
+> ed or headshot by hackers.
+>
+> Some link
+>
 
-        {:ok, response} = Api.create_message(msg.channel_id, %{embed: embed})
+Adamant Ricochet ................................
+Game ............................ Team Fortress 2
+Time .............. Sun 07:00 PM-08:00 PM Eastern
 
-      # Process.send_after(self(), :update1, 1000)
+⊱=================== PLAYERS ===================⊰
 
-      # Api.edit_message(msg.channel_id, response.id, embed: embed2)
+|    Frisbee    |     Ergle     | Nebuchadnezz… |
+|     Ensy      |  - reserve -     - reserve -
 
-      _ ->
-        :ignore
+⊱===============================================⊰
+```
+
+
+I'll play Ringer                              (?)
+  ↳ Get notified 15 minutes before start if a
+     slot is still open— no obligation to play
+
+
+
+Suggest Alternate Time
+[15:30](http://google.com)____________[16:00](http://google.com)____________[16:30](http://google.com)____▞____[17:30](http://google.com)____________[18:00](http://google.com)____________[18:30](http://google.com)
+
+```
+! Frisbee would rather ................. 17:10pm
+↳ and Ensy, Evan, Me too!
+
+! Eviscerator would rather ............. 06:30pm
+↳ Me too!
+```
+")
+            |> put_footer("pickup.fathom.digital")
+
+          {:ok, response} = Api.create_message(msg.channel_id, %{embed: embed})
+
+        # Process.send_after(self(), :update1, 1000)
+
+        # Api.edit_message(msg.channel_id, response.id, embed: embed2)
+
+        _ ->
+          :ignore
+      end
     end
   end
 

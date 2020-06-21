@@ -15,7 +15,8 @@ defmodule Pickup.Application do
       {Phoenix.PubSub, name: Pickup.PubSub},
       # Start the Endpoint (http/https)
       PickupWeb.Endpoint,
-      Pickup.BotConsumer
+      Pickup.BotConsumer,
+      Pickup.Vault
       # Start a worker by calling: Pickup.Worker.start_link(arg)
       # {Pickup.Worker, arg}
     ]

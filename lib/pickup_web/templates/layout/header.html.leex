@@ -1,0 +1,13 @@
+<div class="header">
+  <img src="<%= Routes.static_path(@socket, "/images/animated-square.gif") %>" alt="logo" class="logo">
+  <h1>Fathom Pickup</h1>
+
+  <%= if @current_user do %>
+    <div class="navbar">
+      <%= live_patch "Matches", to: Routes.matches_path(@socket, :index) %>
+      <%= live_patch "New Match", to: Routes.new_match_path(@socket, :index) %>
+
+      <%= link "Logout (#{@current_user.name})", to: "/logout" %>
+    </div>
+  <% end %>
+</div>

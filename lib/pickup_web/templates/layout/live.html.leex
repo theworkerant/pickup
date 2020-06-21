@@ -7,5 +7,7 @@
     phx-click="lv:clear-flash"
     phx-value-key="error"><%= live_flash(@flash, :error) %></p>
 
+  <%= render("header.html", socket: @socket, current_user: @current_user) %>
+
   <%= @inner_content %>
 </main>

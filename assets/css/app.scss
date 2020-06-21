@@ -1,91 +1,85 @@
 /* This file is for your main application css. */
-@import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
+@import "tailwind";
+@import "variables";
+@import "match";
+@import "new_match";
 
-/* LiveView specific classes for your customizations */
-.invalid-feedback {
-  color: #a94442;
-  display: block;
-  margin: -1rem 0 2rem;
+
+body,
+html {
+  background-color: $background;
+  color: white;
+  font-family: "Jost", sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
-.phx-no-feedback.invalid-feedback, .phx-no-feedback .invalid-feedback {
-  display: none;
-}
-
-.phx-click-loading {
-  opacity: 0.5;
-  transition: opacity 1s ease-out;
-}
-
-.phx-disconnected{
-  cursor: wait;
-}
-.phx-disconnected *{
-  pointer-events: none;
-}
-
-.phx-modal {
-  opacity: 1!important;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
-}
-
-.phx-modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-.phx-modal-close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.phx-modal-close:hover,
-.phx-modal-close:focus {
-  color: black;
+a,
+a:visited {
+  color: $purple;
   text-decoration: none;
-  cursor: pointer;
 }
 
+.header {
+  h1 {
+    margin: 0;
+  }
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  .logo {
+    width: 80px;
+  }
+  .navbar {
+    background-color: darken($purple, 10);
+    a {
+      margin: 0 1rem;
+      color: white;
+      font-size: 0.8rem;
+      &:hover {
+        text-decoration: overline;
+      }
+    }
+    text-transform: uppercase;
 
-/* Alerts and form errors */
-.alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
-  border-radius: 4px;
+    padding: 0.2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
 }
-.alert-info {
-  color: #31708f;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-}
-.alert-warning {
-  color: #8a6d3b;
-  background-color: #fcf8e3;
-  border-color: #faebcc;
-}
-.alert-danger {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
-}
-.alert p {
-  margin-bottom: 0;
-}
-.alert:empty {
-  display: none;
+
+.splash {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+
+  a.login-with-discord {
+    max-width: 300px;
+    border-right: 4px solid darken(#b69ed5, 15);
+    border-bottom: 4px solid darken(#865cbb, 25);
+    border-left: 4px solid transparent;
+    border-top: 4px solid transparent;
+    background-color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: darken(#865cbb, 10);
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+    &:hover {
+      color: darken(#865cbb, 15);
+      border-right: 4px solid #b69ed5;
+      border-bottom: 4px solid darken(#865cbb, 5);
+    }
+    img {
+      width: 250px;
+    }
+  }
 }

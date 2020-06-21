@@ -1,6 +1,20 @@
 defmodule PickupWeb.Router do
   use PickupWeb, :router
 
+  require Ueberauth
+
+  pipeline :auth do
+    plug Pickup.Guardian.Pipeline
+  end
+
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated, handler: PickupWeb.AuthController
+  end
+
+  pipeline :ensure_noauth do
+    plug Guardian.Plug.EnsureNotAuthenticated, handler: PickupWeb.AuthController
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -15,9 +29,29 @@ defmodule PickupWeb.Router do
   end
 
   scope "/", PickupWeb do
-    pipe_through :browser
+    pipe_through [:browser, :auth, :ensure_noauth]
+
+    get "/login", SessionController, :new
+    post "/login", SessionController, :login
+  end
+
+  scope "/", PickupWeb do
+    pipe_through [:browser, :auth, :ensure_auth]
+
+    get "/logout", SessionController, :logout
 
     live "/", PageLive, :index
+    live "/matches", MatchesLive, :index
+    live "/matches/new", NewMatchLive, :index
+    live "/matches/:match_name", MatchLive, :index
+  end
+
+  scope "/auth", PickupWeb do
+    pipe_through :browser
+
+    # get("/login/:provider", AuthController, :login)
+    get("/:provider/callback", AuthController, :callback)
+    post("/:provider/callback", AuthController, :callback)
   end
 
   # Other scopes may use custom stacks.
